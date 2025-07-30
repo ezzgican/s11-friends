@@ -1,62 +1,75 @@
-import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { useHistory } from "react-router-dom";
 import axios from "axios";
+import { useContext } from "react";
+import { AuthContext } from "../contexts/AuthContextProvider";
 
-function LoginForm() {
-  const [form, setForm] = useState({
-    username: "",
-    password: "",
-  });
+function AddFriend() {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({ mode: "onChange" });
+const { auth } = useContext(AuthContext);
+  const token = auth?.token;
 
-  const [error, setError] = useState(null);
-
-  const handleChange = (e) => {
-    setForm({
-      ...form,
-      [e.target.name]: e.target.value
-    });
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
-    axios
-      .post("https://nextgen-project.onrender.com/api/s11d2/login", form)
-      .then((response) => {
-        console.log("Başarılı giriş:", response.data);
-        // Giriş başarılıysa yönlendirme, token kaydı vs burada yapılır
+  const history = useHistory();
+  const addFriendSubmit = (data) => {
+    const postData = { ...data, age: Number(data.age) };
+    const config = {
+      method: "post",
+      url: "https://nextgen-project.onrender.com/api/s11d2/friends",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: token,
+      },
+      data: JSON.stringify(postData),
+    };
+    axios(config)
+      .then(function (response) {
+        history.push("/friends");
       })
-      .catch((error) => {
-        console.error("Hata:", error);
-        setError("Giriş başarısız. Lütfen bilgileri kontrol edin.");
+      .catch(function (error) {
+        console.log(error);
       });
   };
 
   return (
-    <div>
-      <h1>LOGIN</h1>
-      <form className="loginFormMainDiv" onSubmit={handleSubmit}>
-        <input
-          type="text"
-          name="username"
-          placeholder="Username"
-          value={form.username}
-          onChange={handleChange}
-        />
-
-        <input
-          type="password"
-          name="password"
-          placeholder="Password"
-          value={form.password}
-          onChange={handleChange}
-        />
-
-        <input type="submit" value="Login" />
-
-        {error && <p style={{ color: "red" }}>{error}</p>}
+    <div className="loginFormMainDiv">
+      <h1>ADD FRIEND</h1>
+      <form onSubmit={handleSubmit(addFriendSubmit)}>
+        <div>
+          <input
+            type="text"
+            placeholder="name"
+            {...register("name", { required: "Ama adın ne?" })}
+          />
+          {errors?.name && <p>{errors.name.message}</p>}
+        </div>
+        <div>
+          <input
+            type="email"
+            placeholder="email"
+            {...register("email", {
+              required: "Epostanı ver  ki spamlayalım.",
+            })}
+          />
+          {errors?.email && <p>{errors.email.message}</p>}
+        </div>
+        <div>
+          <input
+            type="number"
+            placeholder="age"
+            {...register("age", {
+              required: "yaş kaç",
+            })}
+          />
+          {errors?.age && <p>{errors.age.message}</p>}
+        </div>
+        <button type="submit">ADD</button>
       </form>
     </div>
   );
 }
 
-export default LoginForm;
+export default AddFriend;

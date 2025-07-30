@@ -1,6 +1,7 @@
-import { useState } from "react";
-import axios from "axios";
-import useLocalStorage from "../hooks/useLocalStorage";
+import { useContext, useState } from "react";
+
+import { AuthContext } from "../contexts/AuthContextProvider";
+
 
 function LoginForm() {
   const [form, setForm] = useState({
@@ -9,7 +10,7 @@ function LoginForm() {
   });
 
   const [error, setError] = useState(null);
-  const [token, setToken] = useLocalStorage("token", null);
+  const { login } = useContext(AuthContext);
 
   const handleChange = (e) => {
     setForm({
@@ -18,29 +19,18 @@ function LoginForm() {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-
-    
-
-    axios
-      .post("https://nextgen-project.onrender.com/api/s11d2/login", {
-        username: form.username,
-        password: form.password
-      })
-      .then((response) => {
-        console.log("Başarılı giriş:", response.data);
-        setToken(response.data.token);
-      })
-      .catch((error) => {
-        console.error("Hata:", error);
-        setError("Giriş başarısız. Lütfen bilgileri kontrol edin.");
-      });
+    const result = await login(form);
+    if (!result.success) {
+      setError(result.message);
+    }
   };
+
 
   return (
     <div>
-      <h1>LOGIN</h1>
+      <h1>LOG IN</h1>
       <form className="loginFormMainDiv" onSubmit={handleSubmit}>
         <input
           type="text"
@@ -58,7 +48,7 @@ function LoginForm() {
           onChange={handleChange}
         />
 
-        <input type="submit" value="Login" />
+        <input type="submit" value="SUBMIT" />
 
         {error && <p style={{ color: "red" }}>{error}</p>}
       </form>

@@ -1,4 +1,20 @@
+import { useContext } from "react";
+import { useHistory } from "react-router-dom";
+import { AuthContext } from "../contexts/AuthContextProvider";
+
+
+
+
 function Header() {
+  const { isLoggedIn, setAuth } = useContext(AuthContext);
+  const history = useHistory();
+
+   const logout = () => {
+    setAuth(null);
+    history.push("/login");
+  };
+
+
   return (
     <div>
       <div className="loginFormHeaderDiv">
@@ -6,9 +22,15 @@ function Header() {
           <h1>FRIENDS DATABASE</h1>
         </div>
         <div className="loginFormHeaderButtonDiv">
-          <button>FRIENDS LIST</button>
-          <button>ADD FRIEND</button>
-          <button>LOGOUT</button>
+         {!isLoggedIn() ? (
+          <button onClick={() => history.push("/login")}>LOGIN</button>
+        ) : (
+          <div>
+            <button  onClick={() => history.push("/")}>FRIENDS LIST</button>
+            <button  onClick={() => history.push("/friends/add")}>ADD FRIEND</button>
+            <button  onClick={logout}>LOGOUT</button>
+          </div>
+        )}
         </div>
       </div>
     </div>

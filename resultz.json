@@ -1,0 +1,73 @@
+{
+  "stats": "16 passed, 1 failed out of 17",
+  "tests": [
+    {
+      "name": "contexts klasöründe AuthContextProvider.jsx isimli Context Provider Componenti dosyası oluşturulmuş mu?",
+      "state": "pass"
+    },
+    {
+      "name": "AuthContextProvider.jsx dosyasında AuthContext isminde bir context oluşturulmuş mu?",
+      "state": "pass"
+    },
+    {
+      "name": "AuthContextProvider.jsx dosyasında AuthContext.Provider tanımlanmış mı?",
+      "state": "pass"
+    },
+    {
+      "name": "contexts klasöründe AuthContext Providera valuelar aktarılmış mı?",
+      "state": "pass"
+    },
+    {
+      "name": "App.jsx'de oluşturulan provider kullanılmış mı?",
+      "state": "pass"
+    },
+    {
+      "name": "components klasöründe PrivateRoute.jsx isimli protected route componenti oluşturulmuş mu?",
+      "state": "pass"
+    },
+    {
+      "name": "PrivateRoute.jsx dosyasında login sayfasına redirect kullanılmış mı?",
+      "state": "pass"
+    },
+    {
+      "name": "Oluşturulan protected route componenti App.jsx'de kullanılmış mı?",
+      "state": "pass"
+    },
+    {
+      "name": "main.jsx'de routing için uygulama BrowserRouter ile sarmalanmış mı?",
+      "state": "pass"
+    },
+    {
+      "name": "App.jsxde routelar eklenmiş mi?",
+      "state": "pass"
+    },
+    {
+      "name": "Sayfa ilk açıldığında, login sayfası çıkıyor ve header sadece login butonunu görünüyor mu?",
+      "state": "pass"
+    },
+    {
+      "name": "Login formu submit edildiğinde login oluyor ve headerda FRIENDS LIST, ADD FRIEND butonu görünüyor mu?",
+      "state": "pass"
+    },
+    {
+      "name": "Login olunca headerda logout butonu görünüyor ve login butonu kayboluyor mu?",
+      "state": "pass"
+    },
+    {
+      "name": "Logout olunca login sayfası açılıyor mu?",
+      "state": "pass"
+    },
+    {
+      "name": "FRIENDS LIST sayfasında isimler doğru formatta (isim - email) şeklinde görüntüleniyor mu?",
+      "state": "fail"
+    },
+    {
+      "name": "Login bilgisi localStorageda code2work_s11d2 anahtarı ile tutuluyor mu?",
+      "state": "pass"
+    },
+    {
+      "name": "Login bilgisi logout olunca localStoragedan siliniyor mu?",
+      "state": "pass"
+    }
+  ]
+}
