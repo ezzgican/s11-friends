@@ -1,5 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
+import useLocalStorage from "../hooks/useLocalStorage";
 
 function LoginForm() {
   const [form, setForm] = useState({
@@ -8,6 +9,7 @@ function LoginForm() {
   });
 
   const [error, setError] = useState(null);
+  const [token, setToken] = useLocalStorage("token", null);
 
   const handleChange = (e) => {
     setForm({
@@ -19,11 +21,16 @@ function LoginForm() {
   const handleSubmit = (e) => {
     e.preventDefault();
 
+    
+
     axios
-      .post("https://nextgen-project.onrender.com/api/s11d2/login", form)
+      .post("https://nextgen-project.onrender.com/api/s11d2/login", {
+        username: form.username,
+        password: form.password
+      })
       .then((response) => {
         console.log("Başarılı giriş:", response.data);
-        // Giriş başarılıysa yönlendirme, token kaydı vs burada yapılır
+        setToken(response.data.token);
       })
       .catch((error) => {
         console.error("Hata:", error);
