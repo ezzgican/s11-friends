@@ -51,6 +51,8 @@ h2 {
 .loginFormMainDiv {
   display: flex;
   flex-direction: column;
+  align-items: center;
+  
 }
 
 .loginFormMainDiv h1 {
